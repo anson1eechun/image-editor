@@ -1,0 +1,69 @@
+/* Image Editor Pro - Light Theme */
+.light-theme {
+    background: #f8fafc;
+    color: #1a202c;
+}
+
+.light-theme .app-container {
+    background: #f8fafc;
+}
+
+.light-theme .tool-panel {
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.light-theme .toolbar {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.light-theme .status-bar {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.light-theme .tool-content {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .tool-btn {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.light-theme .tool-btn:hover {
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.light-theme .slider {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.light-theme .slider::-webkit-slider-thumb {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.light-theme .slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+}
+
+.light-theme .slider::-moz-range-thumb {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.light-theme .color-input {
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+.light-theme .text-input {
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+.light-theme .status-btn {
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
+.light-theme .canvas-area.drag-over {
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}

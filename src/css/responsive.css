@@ -1,0 +1,114 @@
+/* Image Editor Pro - Responsive Styles */
+
+@media (max-width: 1200px) {
+    .tool-panel {
+        width: 250px;
+    }
+    
+    .main-area {
+        padding: 1.5rem;
+    }
+    
+    .canvas-area {
+        max-width: 700px;
+        max-height: 500px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .tool-panel {
+        width: 200px;
+    }
+    
+    .main-area {
+        padding: 1rem;
+    }
+    
+    .canvas-area {
+        max-width: 600px;
+        max-height: 400px;
+    }
+    
+    .toolbar {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .toolbar-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-panel {
+        position: fixed;
+        right: 15px;
+        width: 180px;
+    }
+    
+    .main-area {
+        padding: 0.5rem;
+    }
+    
+    .canvas-area {
+        max-width: 500px;
+        max-height: 350px;
+    }
+    
+    .toolbar {
+        padding: 0.6rem 1rem;
+    }
+    
+    .toolbar-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tool-panel {
+        width: 100%;
+        right: 0;
+        top: auto;
+        bottom: 60px;
+        height: auto;
+        border-radius: 12px 12px 0 0;
+    }
+    
+    .main-area {
+        padding: 0.5rem;
+    }
+    
+    .canvas-area {
+        max-width: 100%;
+        max-height: 250px;
+    }
+    
+    .toolbar {
+        padding: 0.5rem;
+    }
+    
+    .toolbar-btn {
+        padding: 0.4rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .tool-panel {
+        bottom: 50px;
+    }
+    
+    .main-area {
+        padding: 0.25rem;
+    }
+    
+    .canvas-area {
+        max-height: 200px;
+    }
+    
+    .toolbar-btn {
+        padding: 0.3rem 0.4rem;
+        font-size: 0.6rem;
+    }
+}

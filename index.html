@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Editor Pro - 專業圖片編輯工具</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/components.css">
+    <link rel="stylesheet" href="src/css/animations.css">
+    <link rel="stylesheet" href="src/css/responsive.css">
+    <link rel="stylesheet" href="src/css/dark-theme.css">
+    <link rel="stylesheet" href="src/css/light-theme.css">
+</head>
+<body class="dark-theme">
+    <!-- 主容器 -->
+    <div class="app-container">
+        <!-- 頂部工具列 -->
+        <header class="toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-btn" id="upload-btn" title="上傳圖片">
+                    <svg class="icon icon-upload"></svg>
+                    <span>上傳</span>
+                </button>
+                <button class="toolbar-btn" id="download-btn" title="下載圖片">
+                    <svg class="icon icon-download"></svg>
+                    <span>下載</span>
+                </button>
+                <button class="toolbar-btn" id="undo-btn" title="復原">
+                    <svg class="icon icon-undo"></svg>
+                </button>
+                <button class="toolbar-btn" id="redo-btn" title="重做">
+                    <svg class="icon icon-redo"></svg>
+                </button>
+            </div>
+            
+            <div class="toolbar-center">
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+                <input type="file" id="paste-file" accept="image/*" style="display: none;">
+                <canvas id="main-canvas" class="main-canvas"></canvas>
+            </div>
+            
+            <div class="toolbar-right">
+                <button class="toolbar-btn" id="theme-toggle" title="切換主題">
+                    <svg class="icon icon-theme"></svg>
+                </button>
+                <button class="toolbar-btn" id="zoom-btn" title="縮放">
+                    <svg class="icon icon-zoom"></svg>
+                </button>
+            </div>
+        </header>
+        
+        <!-- 工具面板 -->
+        <div class="tool-panel">
+            <!-- 工具選單 -->
+            <div class="tool-menu">
+                <ul class="tool-list">
+                    <li class="tool-item active" data-tool="select">
+                        <svg class="icon icon-select"></svg>
+                        <span>選擇</span>
+                    </li>
+                    <li class="tool-item" data-tool="crop">
+                        <svg class="icon icon-crop"></svg>
+                        <span>裁剪</span>
+                    </li>
+                    <li class="tool-item" data-tool="rotate">
+                        <svg class="icon icon-rotate"></svg>
+                        <span>旋轉</span>
+                    </li>
+                    <li class="tool-item" data-tool="brush">
+                        <svg class="icon icon-brush"></svg>
+                        <span>畫筆</span>
+                    </li>
+                    <li class="tool-item" data-tool="text">
+                        <svg class="icon icon-text"></svg>
+                        <span>文字</span>
+                    </li>
+                    <li class="tool-item" data-tool="shape">
+                        <svg class="icon icon-shape"></svg>
+                        <span>形狀</span>
+                    </li>
+                    <li class="tool-item" data-tool="filters">
+                        <svg class="icon icon-filters"></svg>
+                        <span>濾鏡</span>
+                    </li>
+                    <li class="tool-item" data-tool="adjust">
+                        <svg class="icon icon-adjust"></svg>
+                        <span>調整</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 工具面板 -->
+            <div class="tool-panel-content">
+                <!-- 選擇工具 -->
+                <div class="tool-content active" data-tool="select">
+                    <div class="tool-group">
+                        <h3 class="tool-title">選擇區域</h3>
+                        <button class="tool-btn select-all">全選</button>
+                        <button class="tool-btn deselect">取消選擇</button>
+                    </div>
+                </div>
+                
+                <!-- 裁剪工具 -->
+                <div class="tool-content" data-tool="crop">
+                    <div class="tool-group">
+                        <h3 class="tool-title">裁剪</h3>
+                        <div class="slider-group">
+                            <label>X</label>
+                            <input type="range" class="slider" id="crop-x" min="0" max="100" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <label>Y</label>
+                            <input type="range" class="slider" id="crop-y" min="0" max="100" value="0">
+                        </div>
+                        <div class="slider-group">
+                            <label>寬度</label>
+                            <input type="range" class="slider" id="crop-width" min="0" max="100" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <label>高度</label>
+                            <input type="range" class="slider" id="crop-height" min="0" max="100" value="100">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 旋轉工具 -->
+                <div class="tool-content" data-tool="rotate">
+                    <div class="tool-group">
+                        <h3 class="tool-title">旋轉</h3>
+                        <div class="rotate-controls">
+                            <button class="rotate-btn" data-angle="90">90°</button>
+                            <button class="rotate-btn" data-angle="180">180°</button>
+                            <button class="rotate-btn" data-angle="270">270°</button>
+                            <button class="rotate-btn" data-angle="flip-h">水平</button>
+                            <button class="rotate-btn" data-angle="flip-v">垂直</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 畫筆工具 -->
+                <div class="tool-content" data-tool="brush">
+                    <div class="tool-group">
+                        <h3 class="tool-title">畫筆</h3>
+                        <div class="color-picker">
+                            <label>顏色</label>
+                            <input type="color" class="color-input" id="brush-color" value="#000000">
+                        </div>
+                        <div class="slider-group">
+                            <label>大小</label>
+                            <input type="range" class="slider" id="brush-size" min="1" max="100" value="5">
+                        </div>
+                        <div class="slider-group">
+                            <label>透明度</label>
+                            <input type="range" class="slider" id="brush-opacity" min="0" max="100" value="100">
+                        </div>
+                        <button class="tool-btn clear-canvas">清除畫布</button>
+                    </div>
+                </div>
+                
+                <!-- 文字工具 -->
+                <div class="tool-content" data-tool="text">
+                    <div class="tool-group">
+                        <h3 class="tool-title">文字</h3>
+                        <div class="color-picker">
+                            <label>顏色</label>
+                            <input type="color" class="color-input" id="text-color" value="#000000">
+                        </div>
+                        <div class="slider-group">
+                            <label>大小</label>
+                            <input type="range" class="slider" id="text-size" min="10" max="100" value="30">
+                        </div>
+                        <textarea class="text-input" id="text-input" placeholder="輸入文字..."></textarea>
+                        <button class="tool-btn add-text">新增文字</button>
+                    </div>
+                </div>
+                
+                <!-- 形狀工具 -->
+                <div class="tool-content" data-tool="shape">
+                    <div class="tool-group">
+                        <h3 class="tool-title">形狀</h3>
+                        <div class="color-picker">
+                            <label>顏色</label>
+                            <input type="color" class="color-input" id="shape-color" value="#000000">
+                        </div>
+                        <div class="shape-controls">
+                            <button class="shape-btn" data-shape="circle">圓形</button>
+                            <button class="shape-btn" data-shape="rectangle">矩形</button>
+                            <button class="shape-btn" data-shape="triangle">三角形</button>
+                            <button class="shape-btn" data-shape="line">直線</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 濾鏡工具 -->
+                <div class="tool-content" data-tool="filters">
+                    <div class="tool-group">
+                        <h3 class="tool-title">濾鏡</h3>
+                        <div class="slider-group">
+                            <label>亮度</label>
+                            <input type="range" class="slider" id="filter-brightness" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>對比度</label>
+                            <input type="range" class="slider" id="filter-contrast" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>飽和度</label>
+                            <input type="range" class="slider" id="filter-saturation" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>色溫</label>
+                            <input type="range" class="slider" id="filter-color-temp" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>銳利度</label>
+                            <input type="range" class="slider" id="filter-sharpness" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>模糊</label>
+                            <input type="range" class="slider" id="filter-blur" min="0" max="100" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 調整工具 -->
+                <div class="tool-content" data-tool="adjust">
+                    <div class="tool-group">
+                        <h3 class="tool-title">調整</h3>
+                        <div class="slider-group">
+                            <label>Hue</label>
+                            <input type="range" class="slider" id="adjust-hue" min="0" max="360" value="180">
+                        </div>
+                        <div class="slider-group">
+                            <label>明度</label>
+                            <input type="range" class="slider" id="adjust-lightness" min="0" max="100" value="50">
+                        </div>
+                        <div class="slider-group">
+                            <label>飽和度</label>
+                            <input type="range" class="slider" id="adjust-saturation" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主要區域 -->
+        <main class="main-area">
+            <div class="canvas-area">
+                <canvas id="preview-canvas" class="preview-canvas"></canvas>
+            </div>
+        </main>
+        
+        <!-- 狀態列 -->
+        <footer class="status-bar">
+            <div class="status-info">
+                <span id="status-info-text">準備就緒</span>
+                <span id="zoom-level">100%</span>
+            </div>
+            <div class="status-actions">
+                <button class="status-btn" id="reset-btn">重置</button>
+                <button class="status-btn" id="save-btn">儲存</button>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- 匯入腳本 -->
+    <script src="src/js/utils.js"></script>
+    <script src="src/js/history.js"></script>
+    <script src="src/js/tools.js"></script>
+    <script src="src/js/tools/brush.js"></script>
+    <script src="src/js/tools/text.js"></script>
+    <script src="src/js/tools/shapes.js"></script>
+    <script src="src/js/tools/filters.js"></script>
+    <script src="src/js/tools/crop.js"></script>
+    <script src="src/js/app.js"></script>
+    <script src="src/js/ui.js"></script>
+</body>
+</html>
